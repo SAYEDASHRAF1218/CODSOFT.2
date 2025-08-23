@@ -1,72 +1,106 @@
-💳 Fraud Detection using Machine Learning
+# Credit Card Fraud Detection
 
-This project predicts fraudulent transactions using machine learning models on financial transaction data. The dataset is highly imbalanced, so techniques like SMOTE oversampling and feature scaling are applied to improve performance.
+This project implements machine learning models to detect fraudulent credit card transactions using the **Fraud Detection Dataset**.  
+Due to the high class imbalance, **SMOTE (Synthetic Minority Over-sampling Technique)** was applied to balance the dataset before training.
 
-📌 Features
+---
 
-Handles class imbalance using SMOTE
+## 📌 Dataset
+- **Train set shape:** (6226, 23)  
+- **Test set shape:** (4667, 23)  
+- Target column: `is_fraud` (0 = Legitimate, 1 = Fraud)  
 
-Feature scaling with StandardScaler
+---
 
-Implements three machine learning models:
+## ⚙️ Workflow
+1. Import required libraries  
+2. Load training and testing datasets  
+3. Remove non-numerical columns  
+4. Handle class imbalance using **SMOTE**  
+5. Scale features with **StandardScaler**  
+6. Train multiple models:  
+   - Logistic Regression  
+   - Decision Tree  
+   - Random Forest  
+7. Evaluate results with:  
+   - Confusion Matrix  
+   - Classification Report  
+   - ROC-AUC Score  
 
-Logistic Regression
+---
 
-Decision Tree
+## 🧪 Results
 
-Random Forest
+### Logistic Regression
+```
+Confusion Matrix:
+[[   0 4646]
+ [   0   21]]
 
-Evaluates models with:
+Classification Report:
+              precision    recall  f1-score   support
 
-Confusion Matrix
+         0.0       0.00      0.00      0.00      4646
+         1.0       0.00      1.00      0.01        21
 
-Classification Report (Precision, Recall, F1-score)
+    accuracy                           0.00      4667
+   macro avg       0.00      0.50      0.00      4667
+weighted avg       0.00      0.00      0.00      4667
 
-ROC-AUC Score
+ROC-AUC Score: 0.5
+```
 
-📂 Dataset
+### Decision Tree
+```
+Confusion Matrix:
+[[4642    4]
+ [  21    0]]
 
-Training shape: 129,668 rows × 23 columns
+Classification Report:
+              precision    recall  f1-score   support
 
-Test shape: 55,572 rows × 23 columns
+         0.0       1.00      1.00      1.00      4646
+         1.0       0.00      0.00      0.00        21
 
-Target variable: is_fraud (binary classification)
+    accuracy                           0.99      4667
+   macro avg       0.50      0.50      0.50      4667
+weighted avg       0.99      0.99      0.99      4667
 
-🛠 Dependencies
+ROC-AUC Score: 0.4995
+```
 
-Install the required Python libraries:
+### Random Forest
+```
+Confusion Matrix:
+[[4646    0]
+ [  21    0]]
 
-pandas
-numpy
-scikit-learn
-imbalanced-learn
+Classification Report:
+              precision    recall  f1-score   support
 
+         0.0       1.00      1.00      1.00      4646
+         1.0       0.00      0.00      0.00        21
 
-Install all at once:
+    accuracy                           1.00      4667
+   macro avg       0.50      0.50      0.50      4667
+weighted avg       0.99      1.00      0.99      4667
 
-pip install pandas numpy scikit-learn imbalanced-learn
+ROC-AUC Score: 0.5
+```
 
-▶️ How to Run
-Option 1: Google Colab
+---
 
-Upload fraudd_final.ipynb and the dataset (fraudTrain.csv, fraudTest.csv)
+## 📊 Observations
+- Logistic Regression failed to classify legitimate transactions (all predicted as fraud).  
+- Decision Tree and Random Forest classified legitimate transactions well but **completely failed on fraud detection** due to extreme class imbalance.  
+- ROC-AUC scores are ~0.5, indicating **poor discrimination ability**.  
 
-Run all cells sequentially
+---
 
-Option 2: Local Jupyter Notebook
-git clone <your-repo-link>
-cd <repo-folder>
-jupyter notebook fraudd_final.ipynb
+## 🚀 Future Improvements
+- Use **ensemble methods** like XGBoost or LightGBM.  
+- Apply **advanced resampling techniques** (e.g., SMOTEENN, ADASYN).  
+- Engineer additional fraud-related features.  
+- Try **deep learning models** for anomaly detection.
 
-📊 Model Performance
-Model	Accuracy	ROC-AUC
-Logistic Regression	95%	0.874
-Decision Tree	97%	0.672
-Random Forest	99%	0.707
-Key Observations:
-
-Random Forest achieved the best overall accuracy (99%) but struggled with recall on the fraud class.
-
-Logistic Regression had the best balance with ROC-AUC = 0.874.
-
-Severe class imbalance impacts minority class performance even after SMOTE.
+---
